@@ -302,18 +302,16 @@ namespace Camino.Service.Business.Products
             return id;
         }
 
-        public ProductCategoryProjection Update(ProductCategoryProjection category)
+        public async Task<ProductCategoryProjection> UpdateAsync(ProductCategoryProjection category)
         {
-            var exist = _productCategoryRepository.FirstOrDefault(x => x.Id == category.Id);
-            exist.Description = category.Description;
-            exist.Name = category.Name;
-            exist.ParentId = category.ParentId;
-            exist.UpdatedById = category.UpdatedById;
-            exist.UpdatedDate = DateTimeOffset.UtcNow;
+            await _productCategoryRepository.Get(x => x.Id == category.Id)
+                .Set(x => x.Description, category.Description)
+                .Set(x => x.Name, category.Name)
+                .Set(x => x.ParentId, category.ParentId)
+                .Set(x => x.UpdatedById, category.UpdatedById)
+                .Set(x => x.UpdatedDate, DateTimeOffset.UtcNow)
+                .UpdateAsync();
 
-            _productCategoryRepository.Update(exist);
-
-            category.UpdatedDate = exist.UpdatedDate;
             return category;
         }
     }

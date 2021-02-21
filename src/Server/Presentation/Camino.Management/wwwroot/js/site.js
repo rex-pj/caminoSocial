@@ -14,7 +14,7 @@
         var method = select2.attr("method") ? select2.attr("method") : "get";
         var url = select2.data("url");
         var selected = select2.val();
-        if (typeof (selected) !== 'string') {
+        if (selected && typeof (selected) !== 'string') {
             selected = selected.join(',');
         }
 

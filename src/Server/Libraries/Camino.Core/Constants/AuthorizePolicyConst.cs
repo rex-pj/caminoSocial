@@ -64,5 +64,9 @@
         public const string CanReadProduct = "CanReadProduct";
         public const string CanUpdateProduct = "CanUpdateProduct";
         public const string CanDeleteProduct = "CanDeleteProduct";
+        public const string CanCreateProductAttribute = "CanCreateProductAttribute";
+        public const string CanReadProductAttribute = "CanReadProductAttribute";
+        public const string CanUpdateProductAttribute = "CanUpdateProductAttribute";
+        public const string CanDeleteProductAttribute = "CanDeleteProductAttribute";
     }
 }

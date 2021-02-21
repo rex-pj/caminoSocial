@@ -73,6 +73,7 @@ namespace Camino.Service.Infrastructure.Extensions
                 .AddTransient<IProductCategoryBusiness, ProductCategoryBusiness>()
                 .AddTransient<IProductPictureBusiness, ProductPictureBusiness>()
                 .AddTransient<IFeedBusiness, FeedBusiness>()
+                .AddTransient<IProductAttributeBusiness, ProductAttributeBusiness>()
                 .AddTransient<ValidationStrategyContext>();
         }
 
@@ -111,7 +112,8 @@ namespace Camino.Service.Infrastructure.Extensions
                 .AddTransient<IRepository<ProductPicture>, ContentRepository<ProductPicture>>()
                 .AddTransient<IRepository<ProductCategoryRelation>, ContentRepository<ProductCategoryRelation>>()
                 .AddTransient<IRepository<ProductPrice>, ContentRepository<ProductPrice>>()
-                .AddTransient<IRepository<FarmProduct>, ContentRepository<FarmProduct>>();
+                .AddTransient<IRepository<FarmProduct>, ContentRepository<FarmProduct>>()
+                .AddTransient<IRepository<ProductAttribute>, ContentRepository<ProductAttribute>>();
         }
     }
 }

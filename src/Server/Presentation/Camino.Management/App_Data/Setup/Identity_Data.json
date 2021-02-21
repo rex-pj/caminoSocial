@@ -298,6 +298,22 @@
     {
       "Name": "CanDeleteProductCategory",
       "Description": "Can delete product category"
+    },
+    {
+      "Name": "CanCreateProductAttribute",
+      "Description": "Can create product attribute"
+    },
+    {
+      "Name": "CanReadProductAttribute",
+      "Description": "Can read product attribute"
+    },
+    {
+      "Name": "CanUpdateProductAttribute",
+      "Description": "Can update product attribute"
+    },
+    {
+      "Name": "CanDeleteProductAttribute",
+      "Description": "Can delete product attribute"
     }
   ],
   "Countries": [

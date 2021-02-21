@@ -6,7 +6,7 @@ namespace Camino.DAL.Entities
     {
         public long Id { get; set; }
         public long ProductId { get; set; }
-        public int Price { get; set; }
+        public decimal Price { get; set; }
         public bool IsCurrent { get; set; }
         public bool IsDiscounted { get; set; }
         public bool IsPublished { get; set; }

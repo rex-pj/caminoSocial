@@ -23,7 +23,7 @@ namespace Module.Api.Product.Models
         public long CreatedById { get; set; }
         public string CreatedBy { get; set; }
         public string CreatedByPhotoCode { get; set; }
-        public int Price { get; set; }
+        public decimal Price { get; set; }
         public IEnumerable<ProductCategoryRelationModel> Categories { get; set; }
         public IEnumerable<ProductFarmModel> Farms { get; set; }
         public IEnumerable<PictureRequestModel> Thumbnails { get; set; }

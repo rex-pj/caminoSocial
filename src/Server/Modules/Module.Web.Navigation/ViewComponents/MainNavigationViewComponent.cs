@@ -130,6 +130,12 @@ namespace Module.Web.Navigation.ViewComponents
                                     },
                                     new NavigationModel()
                                     {
+                                        Name = "Product Attributes",
+                                        Code = "productAttribute",
+                                        Url = "/ProductAttribute"
+                                    },
+                                    new NavigationModel()
+                                    {
                                         Name = "Product Pictures",
                                         Code = "productPicture",
                                         Url = "/ProductPicture"

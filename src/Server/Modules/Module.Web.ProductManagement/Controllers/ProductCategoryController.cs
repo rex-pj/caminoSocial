@@ -164,7 +164,7 @@ namespace Module.Web.ProductManagement.Controllers
 
         [HttpPost]
         [ApplicationAuthorize(AuthorizePolicyConst.CanUpdateProductCategory)]
-        public IActionResult Update(ProductCategoryModel model)
+        public async Task<IActionResult> Update(ProductCategoryModel model)
         {
             var category = new ProductCategoryProjection()
             {
@@ -186,7 +186,7 @@ namespace Module.Web.ProductManagement.Controllers
             }
 
             category.UpdatedById = LoggedUserId;
-            _productCategoryBusiness.Update(category);
+            await _productCategoryBusiness.UpdateAsync(category);
             return RedirectToAction("Detail", new { id = category.Id });
         }
 

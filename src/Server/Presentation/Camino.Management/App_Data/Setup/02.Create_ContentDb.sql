@@ -254,11 +254,70 @@ ALTER TABLE dbo.ProductCategoryRelation
 ADD CONSTRAINT PK_ProductCategoryRelation
 PRIMARY KEY (Id);
 
+-- PRODUCT ATTRIBUTE --
+CREATE TABLE [dbo].[ProductAttribute]
+(
+	[Id] INT IDENTITY(1,1) NOT NULL,
+	[Name] NVARCHAR(MAX) NOT NULL,
+	[Description] NVARCHAR(MAX) NULL
+)
+
+GO
+ALTER TABLE dbo.[ProductAttribute]
+ADD CONSTRAINT PK_ProductAttribute
+PRIMARY KEY (Id);
+
+-- PRODUCT ATTRIBUTE RELATION --
+CREATE TABLE [dbo].[ProductAttributeRelation](
+	[Id] [int] IDENTITY(1,1) NOT NULL,
+	[ProductAttributeId] INT NOT NULL,
+	[ProductId] BIGINT NOT NULL,
+	[TextPrompt] NVARCHAR(MAX) NULL,
+	[IsRequired] BIT NOT NULL,
+	[AttributeControlTypeId] INT NOT NULL,
+	[DisplayOrder] INT NOT NULL
+)
+
+GO
+ALTER TABLE [dbo].[ProductAttributeRelation]
+ADD CONSTRAINT PK_ProductAttributeRelation
+PRIMARY KEY (Id)
+
+GO
+ALTER TABLE [dbo].[ProductAttributeRelation]
+ADD CONSTRAINT FK_ProductAttributeRelation_Product
+FOREIGN KEY (ProductId) REFERENCES dbo.[Product](Id)
+
+GO
+ALTER TABLE [dbo].[ProductAttributeRelation]
+ADD CONSTRAINT FK_ProductAttributeRelation_ProductAttribute
+FOREIGN KEY (ProductAttributeId) REFERENCES dbo.[ProductAttribute](Id)
+
+-- Product Attribute Relation Value --
+GO
+CREATE TABLE [dbo].[ProductAttributeRelationValue](
+	[Id] INT IDENTITY(1,1) NOT NULL,
+	[Name] NVARCHAR(400) NOT NULL,
+	[ProductAttributeRelationId] INT NOT NULL,
+	[PriceAdjustment] DECIMAL(18, 4) NOT NULL,
+	[Quantity] INT NOT NULL,
+	[DisplayOrder] INT NOT NULL
+)
+
+GO
+ALTER TABLE [dbo].[ProductAttributeRelationValue]
+ADD CONSTRAINT PK_ProductAttributeRelationValue
+PRIMARY KEY (Id)
+
+GO
+ALTER TABLE [dbo].[ProductAttributeRelationValue]
+ADD CONSTRAINT FK_ProductAttributeRelationValue_ProductAttributeRelation
+FOREIGN KEY (ProductAttributeRelationId) REFERENCES dbo.[ProductAttributeRelation](Id)
 --PRODUCT PRICE--
 CREATE TABLE [dbo].[ProductPrice](
 	Id BIGINT NOT NULL IDENTITY(1,1),
 	[ProductId] BIGINT NOT NULL,
-	[Price] INT NOT NULL,
+	[Price] DECIMAL(18, 4) NOT NULL,
 	[PricedDate] DATETIME2 NOT NULL,
 	[IsCurrent] BIT NOT NULL,
 	[IsDiscounted] BIT NOT NULL,

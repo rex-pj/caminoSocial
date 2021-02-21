@@ -23,7 +23,7 @@ namespace Camino.Service.Projections.Product
         public long CreatedById { get; set; }
         public string CreatedBy { get; set; }
         public string CreatedByPhotoCode { get; set; }
-        public int Price { get; set; }
+        public decimal Price { get; set; }
         public IEnumerable<ProductCategoryProjection> Categories { get; set; }
         public IEnumerable<ProductFarmProjection> Farms { get; set; }
         public IEnumerable<PictureRequestProjection> Pictures { get; set; }

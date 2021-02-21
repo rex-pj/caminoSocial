@@ -1,0 +1,21 @@
+﻿@model ProductAttributeModel
+@{
+    ViewData["Title"] = $"Update product attribute {Model.Name}";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+@section Scripts {
+    <script src="~/productmanagement/js/productattribute-update.js" asp-append-version="true"></script>
+}
+
+
+<div class="card-header bg-dark text-light">
+    <a asp-action="Index" asp-controller="ProductAttribute" class="btn btn-sm btn-outline-secondary">
+        <i class="fa fa-arrow-left"></i>
+    </a>
+    @ViewData["Title"]
+</div>
+<div class="card-body">
+    <form method="post" asp-action="Update" asp-controller="ProductAttribute">
+        <partial name="_CreateOrUpdateForm" />
+    </form>
+</div>

@@ -1,0 +1,22 @@
+﻿@model ProductAttributeModel
+
+<tr>
+    <th>@Model.Id</th>
+    <td>
+        <a asp-action="Detail" asp-controller="ProductAttribute" asp-route-id="@Model.Id">
+            @Model.Name
+        </a>
+    </td>
+    <th>@Model.Description</th>
+    <td>
+        @if (Model.CanUpdate)
+        {
+            <a asp-action="Update" asp-controller="ProductAttribute" asp-route-id="@Model.Id" class="btn btn-sm btn-outline-dark">
+                <i class="fa fa-edit"></i>
+            </a>
+        }
+        <a asp-action="Detail" asp-controller="ProductAttribute" asp-route-id="@Model.Id" class="btn btn-sm btn-outline-dark">
+            <i class="fa fa-eye"></i>
+        </a>
+    </td>
+</tr>
