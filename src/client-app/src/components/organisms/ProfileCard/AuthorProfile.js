@@ -55,7 +55,7 @@ const MoreInfo = styled.p`
 export default (props) => {
   const { profile, className } = props;
   return (
-    <div className={`${className} row no-gutters`}>
+    <div className={`${className ? className : ""} row g-0`}>
       <div className="col col-auto">
         <CreatorAvatar to={profile.profileUrl}>
           {profile.photoUrl ? (

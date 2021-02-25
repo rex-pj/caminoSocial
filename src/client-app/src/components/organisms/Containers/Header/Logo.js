@@ -27,12 +27,13 @@ const LogoTitle = styled.h2`
   display: inline-block;
   color: ${(p) => p.theme.color.neutralText};
   font-family: "Poppins", sans-serif;
-  font-size: 24px;
+  font-size: 28px;
   margin: 1px 0;
   height: ${(p) => p.theme.size.normal};
   background: ${(p) => p.theme.gradientColor.secondary};
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
+  font-weight: 600;
 `;
 
 const TitleHead = styled.span`

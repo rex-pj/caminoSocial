@@ -107,7 +107,7 @@ export default (function (props) {
   return (
     <Root>
       <div className="row">
-        <div className="col-auto mr-auto">
+        <div className="col-auto me-auto">
           <HorizontalList className={className}>
             {navs.map((nav) => {
               return (

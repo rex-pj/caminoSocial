@@ -143,7 +143,7 @@ export default withRouter((props) => {
 
   return (
     <form onSubmit={(e) => onUpdate(e)} method="POST">
-      <div className="row no-gutters">
+      <div className="row g-0">
         <div className="col col-12 col-sm-7">
           <AuthBanner icon="unlock-alt" title="Phục hồi mật khẩu" />
         </div>

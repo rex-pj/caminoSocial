@@ -130,7 +130,7 @@ export default (props) => {
               size="xs"
               disabled={!props.isFormEnabled || !isFormValid}
             >
-              <FontAwesomeIcon icon="pencil-alt" className="mr-1" />
+              <FontAwesomeIcon icon="pencil-alt" className="me-1" />
               Change Password
             </ButtonPrimary>
           </FormFooter>

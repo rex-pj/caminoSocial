@@ -298,7 +298,7 @@ export default withRouter((props) => {
         />
         <Footer className="row mb-3">
           <div className="col-auto"></div>
-          <div className="col-auto ml-auto">
+          <div className="col-auto ms-auto">
             <ButtonPrimary size="xs">Post</ButtonPrimary>
           </div>
         </Footer>

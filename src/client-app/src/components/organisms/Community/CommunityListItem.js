@@ -94,7 +94,7 @@ export default (props) => {
 
       <PanelHeader>
         <ContentTopbar>
-          <div className="row no-gutters">
+          <div className="row g-0">
             <div className="col col-8 col-sm-9 col-md-10 col-lg-11">
               <Title>
                 <AnchorLink to={community.url}>{community.name}</AnchorLink>

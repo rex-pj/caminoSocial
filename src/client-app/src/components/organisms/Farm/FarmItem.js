@@ -188,7 +188,7 @@ export default withRouter((props) => {
       </ThumbnailBox>
       <PanelHeader>
         <ContentTopbar>
-          <div className="row no-gutters">
+          <div className="row g-0">
             <div className="col col-8 col-sm-9 col-md-10 col-lg-11">
               <AuthorProfile profile={loadCreatedInfo()} />
             </div>
@@ -208,7 +208,7 @@ export default withRouter((props) => {
                     <span onClick={onEditMode}>
                       <FontAwesomeIcon
                         icon="pencil-alt"
-                        className="mr-2"
+                        className="me-2"
                       ></FontAwesomeIcon>
                       Edit
                     </span>
@@ -217,7 +217,7 @@ export default withRouter((props) => {
                     <span onClick={onOpenDeleteConfirmation}>
                       <FontAwesomeIcon
                         icon="trash-alt"
-                        className="mr-2"
+                        className="me-2"
                       ></FontAwesomeIcon>
                       Delete
                     </span>

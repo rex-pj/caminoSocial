@@ -11,6 +11,8 @@ import ImageUpload from "../UploadControl/ImageUpload";
 import AsyncSelect from "react-select/async";
 import productCreationModel from "../../../models/productCreationModel";
 import { Thumbnail } from "../../molecules/Thumbnails";
+import { ButtonOutlinePrimary } from "../../atoms/Buttons/OutlineButtons";
+import ProductAttributeEditor from "./ProductAttributeEditor";
 
 const FormRow = styled.div`
   margin-bottom: ${(p) => p.theme.size.tiny};
@@ -274,13 +276,13 @@ export default withRouter((props) => {
     }
   }, [currentProduct, formData]);
 
-  const { name, price, thumbnails, categories, farms } = formData;
+  const { name, price, thumbnails, categories, farms, attributes } = formData;
 
   return (
     <Fragment>
       <form onSubmit={(e) => onProductPost(e)} method="POST">
         <FormRow className="row">
-          <div className="col-9 col-lg-9 pr-1">
+          <div className="col-12 col-lg-9 pr-1">
             <PrimaryTextbox
               name="name"
               value={name.value}
@@ -289,7 +291,7 @@ export default withRouter((props) => {
               placeholder="Product title"
             />
           </div>
-          <div className="col-3 col-lg-3 pl-1">
+          <div className="col-12 col-lg-3 pl-1">
             <PrimaryTextbox
               name="price"
               value={price.value}
@@ -299,8 +301,8 @@ export default withRouter((props) => {
             />
           </div>
         </FormRow>
-        <FormRow className="row">
-          <div className="col-4 col-lg-5 pr-1">
+        <FormRow className="row mb-2">
+          <div className="col-12 col-lg-5 pr-1">
             <AsyncSelect
               key={JSON.stringify(categories)}
               className="cate-selection"
@@ -317,7 +319,7 @@ export default withRouter((props) => {
               placeholder="Select categories"
             />
           </div>
-          <div className="col-4 col-lg-5 pr-1">
+          <div className="col-12 col-lg-5 pr-1">
             <AsyncSelect
               className="cate-selection"
               key={JSON.stringify(farms)}
@@ -331,10 +333,26 @@ export default withRouter((props) => {
               placeholder="Select farms"
             />
           </div>
-          <div className="col-4 col-lg-2 pl-1">
+          <div className="col-12 col-lg-2 pl-1">
             <ThumbnailUpload onChange={handleImageChange}></ThumbnailUpload>
           </div>
         </FormRow>
+        <FormRow>
+          <label className="me-1">Attributes</label>
+          <ButtonOutlinePrimary
+            type="button"
+            size="xs"
+            title="Add product attributes"
+          >
+            <FontAwesomeIcon icon="plus"></FontAwesomeIcon>
+          </ButtonOutlinePrimary>
+        </FormRow>
+        {attributes
+          ? attributes.map((attr) => {
+              return <ProductAttributeEditor></ProductAttributeEditor>;
+            })
+          : null}
+
         {thumbnails.value ? (
           <FormRow className="row">
             {thumbnails.value.map((item, index) => {
@@ -383,7 +401,7 @@ export default withRouter((props) => {
         />
         <Footer className="row mb-3">
           <div className="col-auto"></div>
-          <div className="col-auto ml-auto">
+          <div className="col-auto ms-auto">
             <ButtonPrimary size="xs">Post</ButtonPrimary>
           </div>
         </Footer>

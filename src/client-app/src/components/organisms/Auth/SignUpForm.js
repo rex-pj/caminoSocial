@@ -166,7 +166,7 @@ export default (props) => {
 
   return (
     <form onSubmit={(e) => onSignUp(e)} method="POST">
-      <div className="row no-gutters">
+      <div className="row g-0">
         <div className="col col-12 col-sm-7">
           <AuthBanner
             icon="signature"

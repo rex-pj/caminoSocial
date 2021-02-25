@@ -173,7 +173,7 @@ export default withRouter(function (props) {
                       <span onClick={onOpenDeleteConfirmation}>
                         <FontAwesomeIcon
                           icon="trash-alt"
-                          className="mr-2"
+                          className="me-2"
                         ></FontAwesomeIcon>
                         Delete
                       </span>

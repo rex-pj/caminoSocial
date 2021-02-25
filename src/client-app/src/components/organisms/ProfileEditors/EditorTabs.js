@@ -26,13 +26,13 @@ export default function (props) {
         <div className="tabs-bar">
           <ButtonPrimary
             size="xs"
-            className={`mr-1${editorMode === "ARTICLE" ? " actived" : ""}`}
+            className={`me-1${editorMode === "ARTICLE" ? " actived" : ""}`}
             onClick={() => onToggleCreateMode("ARTICLE")}
           >
             <span>
               <FontAwesomeIcon
                 icon="newspaper"
-                className="mr-1"
+                className="me-1"
               ></FontAwesomeIcon>
               Create Post
             </span>
@@ -40,12 +40,12 @@ export default function (props) {
           <ButtonPrimary
             size="xs"
             onClick={() => onToggleCreateMode("FARM")}
-            className={`mr-1${editorMode === "FARM" ? " actived" : ""}`}
+            className={`me-1${editorMode === "FARM" ? " actived" : ""}`}
           >
             <span>
               <FontAwesomeIcon
                 icon="warehouse"
-                className="mr-1"
+                className="me-1"
               ></FontAwesomeIcon>
               Create Farm
             </span>
@@ -53,12 +53,12 @@ export default function (props) {
           <ButtonPrimary
             size="xs"
             onClick={() => onToggleCreateMode("PRODUCT")}
-            className={`mr-1${editorMode === "PRODUCT" ? " actived" : ""}`}
+            className={`me-1${editorMode === "PRODUCT" ? " actived" : ""}`}
           >
             <span>
               <FontAwesomeIcon
                 icon="apple-alt"
-                className="mr-1"
+                className="me-1"
               ></FontAwesomeIcon>
               Create Product
             </span>
