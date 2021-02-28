@@ -5,7 +5,7 @@ import { LabelPrimary } from "../../atoms/Labels";
 
 export default () => {
   return (
-    <div className="row">
+    <div className="row mb-2">
       <div className="col-12 col-md-6 col-lg-4">
         <div className="row">
           <div className="col-3 mt-2">

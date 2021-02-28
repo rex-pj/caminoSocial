@@ -270,6 +270,20 @@ export default withRouter((props) => {
     });
   };
 
+  const onAddAttribute = () => {
+    let { attributes } = formData;
+    attributes.push({
+      textPrompt: "",
+      isRequired: false,
+      attributeControlTypeId: 0,
+      displayOrder: 0,
+    });
+
+    setFormData({
+      ...formData,
+    });
+  }
+
   useEffect(() => {
     if (currentProduct && !formData?.id?.value) {
       setFormData(currentProduct);
@@ -343,14 +357,15 @@ export default withRouter((props) => {
             type="button"
             size="xs"
             title="Add product attributes"
+            onClick={onAddAttribute}
           >
             <FontAwesomeIcon icon="plus"></FontAwesomeIcon>
           </ButtonOutlinePrimary>
         </FormRow>
         {attributes
-          ? attributes.map((attr) => {
-              return <ProductAttributeEditor></ProductAttributeEditor>;
-            })
+          ? attributes.map((index, attr) => {
+            return <ProductAttributeEditor key={index} attribute={attr}></ProductAttributeEditor>;
+          })
           : null}
 
         {thumbnails.value ? (

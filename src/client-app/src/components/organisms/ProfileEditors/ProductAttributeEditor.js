@@ -1,4 +1,4 @@
-import React, { Fragment } from "react";
+import React, { Fragment, useState } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { PrimaryTextbox } from "../../atoms/Textboxes";
 import AsyncSelect from "react-select/async";
@@ -27,7 +27,31 @@ const FormRow = styled.div`
   }
 `;
 
-export default () => {
+export default (props) => {
+  const { attribute } = props;
+  const [formData, setFormData] = useState(attribute);
+  const { attributeValues } = formData;
+
+  const onAddAttributeValue = () => {
+    let data = { ...formData };
+    let { attributeValues } = data;
+
+    if (!attributeValues) {
+      attributeValues = [];
+    }
+
+    attributeValues.push({
+      label: "",
+      priceAdjustment: 0,
+      quantity: 0,
+      displayOrder: 0
+    });
+
+    data.attributeValues = attributeValues;
+    setFormData({
+      ...data,
+    });
+  }
   return (
     <Fragment>
       <FormRow>
@@ -49,12 +73,17 @@ export default () => {
               type="button"
               size="xs"
               title="Add attribute value"
+              onClick={onAddAttributeValue}
             >
               <FontAwesomeIcon icon="plus"></FontAwesomeIcon>
             </ButtonOutlinePrimary>
           </div>
         </div>
-        <ProductAttributeValueEditor />
+        {attributeValues
+          ? attributeValues.map((index, attrVal) => {
+            return <ProductAttributeValueEditor key={index} attributeValue={attrVal}></ProductAttributeValueEditor>;
+          })
+          : null}
       </FormRow>
     </Fragment>
   );
