@@ -282,7 +282,26 @@ export default withRouter((props) => {
     setFormData({
       ...formData,
     });
-  }
+  };
+
+  const onRemoveAttribute = (currentAttr) => {
+    let { attributes } = formData;
+    const index = attributes.indexOf(currentAttr);
+    attributes.splice(index, 1);
+
+    setFormData({
+      ...formData,
+    });
+  };
+
+  const onAttributeChange = (e, index) => {
+    let { attributes } = formData;
+    attributes[index] = e;
+
+    setFormData({
+      ...formData,
+    });
+  };
 
   useEffect(() => {
     if (currentProduct && !formData?.id?.value) {
@@ -363,9 +382,16 @@ export default withRouter((props) => {
           </ButtonOutlinePrimary>
         </FormRow>
         {attributes
-          ? attributes.map((index, attr) => {
-            return <ProductAttributeEditor key={index} attribute={attr}></ProductAttributeEditor>;
-          })
+          ? attributes.map((attr, index) => {
+              return (
+                <ProductAttributeEditor
+                  key={index}
+                  attribute={attr}
+                  onRemoveAttribute={onRemoveAttribute}
+                  onAttributeChange={(e) => onAttributeChange(e, index)}
+                />
+              );
+            })
           : null}
 
         {thumbnails.value ? (

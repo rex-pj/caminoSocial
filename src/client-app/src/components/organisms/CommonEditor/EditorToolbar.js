@@ -9,7 +9,7 @@ const Toolbar = styled.div`
   padding: ${(p) => p.theme.size.tiny};
   border-bottom: 1px solid ${(p) => p.theme.color.neutralBg};
   background-color: ${(p) => p.theme.color.primaryBg};
-  background-image: ${(p) => p.theme.gradientColor.primary};
+  background-image: ${(p) => p.theme.gradientColor.primaryBg};
   border-top-left-radius: ${(p) => p.theme.borderRadius.normal};
   border-top-right-radius: ${(p) => p.theme.borderRadius.normal};
 `;
