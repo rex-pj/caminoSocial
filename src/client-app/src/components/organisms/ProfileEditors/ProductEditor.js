@@ -1,4 +1,4 @@
-import React, { Fragment, useState, useRef, useEffect } from "react";
+import React, { useState, useRef, useEffect } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { withRouter } from "react-router-dom";
 import CommonEditor from "../CommonEditor";
@@ -270,6 +270,7 @@ export default withRouter((props) => {
     });
   };
 
+  /// Attribute features
   const onAddAttribute = () => {
     let { attributes } = formData;
     attributes.push({
@@ -312,141 +313,134 @@ export default withRouter((props) => {
   const { name, price, thumbnails, categories, farms, attributes } = formData;
 
   return (
-    <Fragment>
-      <form onSubmit={(e) => onProductPost(e)} method="POST">
+    <form onSubmit={(e) => onProductPost(e)} method="POST">
+      <FormRow className="row g-0">
+        <div className="col-12 col-lg-9 pe-1">
+          <PrimaryTextbox
+            name="name"
+            value={name.value}
+            autoComplete="off"
+            onChange={(e) => handleInputChange(e)}
+            placeholder="Product title"
+          />
+        </div>
+        <div className="col-12 col-lg-3 ps-1">
+          <PrimaryTextbox
+            name="price"
+            value={price.value}
+            autoComplete="off"
+            onChange={(e) => handlePriceChange(e)}
+            placeholder="Price"
+          />
+        </div>
+      </FormRow>
+      <FormRow className="row mb-2">
+        <div className="col-12 col-lg-5 pe-1">
+          <AsyncSelect
+            key={JSON.stringify(categories)}
+            className="cate-selection"
+            defaultOptions
+            isMulti
+            ref={categorySelectRef}
+            defaultValue={loadCategoriesSelected()}
+            onChange={(e, action) =>
+              handleSelectChange(e, action, "categories")
+            }
+            loadOptions={loadCategorySelections}
+            isClearable={true}
+            cache={false}
+            placeholder="Select categories"
+          />
+        </div>
+        <div className="col-12 col-lg-5 pe-1">
+          <AsyncSelect
+            className="cate-selection"
+            key={JSON.stringify(farms)}
+            defaultOptions
+            isMulti
+            ref={farmSelectRef}
+            defaultValue={loadFarmsSelected()}
+            onChange={(e, action) => handleSelectChange(e, action, "farms")}
+            loadOptions={loadFarmSelections}
+            isClearable={true}
+            placeholder="Select farms"
+          />
+        </div>
+        <div className="col-12 col-lg-2 ps-1">
+          <ThumbnailUpload onChange={handleImageChange}></ThumbnailUpload>
+        </div>
+      </FormRow>
+      <FormRow>
+        <label className="me-1">Attributes</label>
+        <ButtonOutlinePrimary
+          type="button"
+          size="xs"
+          title="Add product attributes"
+          onClick={onAddAttribute}
+        >
+          <FontAwesomeIcon icon="plus"></FontAwesomeIcon>
+        </ButtonOutlinePrimary>
+      </FormRow>
+      {attributes
+        ? attributes.map((attr, index) => {
+            return (
+              <ProductAttributeEditor
+                key={index}
+                attribute={attr}
+                onRemoveAttribute={onRemoveAttribute}
+                onAttributeChange={(e) => onAttributeChange(e, index)}
+              />
+            );
+          })
+        : null}
+
+      {thumbnails.value ? (
         <FormRow className="row">
-          <div className="col-12 col-lg-9 pr-1">
-            <PrimaryTextbox
-              name="name"
-              value={name.value}
-              autoComplete="off"
-              onChange={(e) => handleInputChange(e)}
-              placeholder="Product title"
-            />
-          </div>
-          <div className="col-12 col-lg-3 pl-1">
-            <PrimaryTextbox
-              name="price"
-              value={price.value}
-              autoComplete="off"
-              onChange={(e) => handlePriceChange(e)}
-              placeholder="Price"
-            />
-          </div>
-        </FormRow>
-        <FormRow className="row mb-2">
-          <div className="col-12 col-lg-5 pr-1">
-            <AsyncSelect
-              key={JSON.stringify(categories)}
-              className="cate-selection"
-              defaultOptions
-              isMulti
-              ref={categorySelectRef}
-              defaultValue={loadCategoriesSelected()}
-              onChange={(e, action) =>
-                handleSelectChange(e, action, "categories")
-              }
-              loadOptions={loadCategorySelections}
-              isClearable={true}
-              cache={false}
-              placeholder="Select categories"
-            />
-          </div>
-          <div className="col-12 col-lg-5 pr-1">
-            <AsyncSelect
-              className="cate-selection"
-              key={JSON.stringify(farms)}
-              defaultOptions
-              isMulti
-              ref={farmSelectRef}
-              defaultValue={loadFarmsSelected()}
-              onChange={(e, action) => handleSelectChange(e, action, "farms")}
-              loadOptions={loadFarmSelections}
-              isClearable={true}
-              placeholder="Select farms"
-            />
-          </div>
-          <div className="col-12 col-lg-2 pl-1">
-            <ThumbnailUpload onChange={handleImageChange}></ThumbnailUpload>
-          </div>
-        </FormRow>
-        <FormRow>
-          <label className="me-1">Attributes</label>
-          <ButtonOutlinePrimary
-            type="button"
-            size="xs"
-            title="Add product attributes"
-            onClick={onAddAttribute}
-          >
-            <FontAwesomeIcon icon="plus"></FontAwesomeIcon>
-          </ButtonOutlinePrimary>
-        </FormRow>
-        {attributes
-          ? attributes.map((attr, index) => {
+          {thumbnails.value.map((item, index) => {
+            if (item.base64Data) {
               return (
-                <ProductAttributeEditor
-                  key={index}
-                  attribute={attr}
-                  onRemoveAttribute={onRemoveAttribute}
-                  onAttributeChange={(e) => onAttributeChange(e, index)}
-                />
+                <div className="col-3" key={index}>
+                  <ImageEditBox>
+                    <Thumbnail src={item.base64Data}></Thumbnail>
+                    <RemoveImageButton onClick={(e) => onImageRemoved(e, item)}>
+                      <FontAwesomeIcon icon="times"></FontAwesomeIcon>
+                    </RemoveImageButton>
+                  </ImageEditBox>
+                </div>
               );
-            })
-          : null}
-
-        {thumbnails.value ? (
-          <FormRow className="row">
-            {thumbnails.value.map((item, index) => {
-              if (item.base64Data) {
-                return (
-                  <div className="col-3" key={index}>
-                    <ImageEditBox>
-                      <Thumbnail src={item.base64Data}></Thumbnail>
-                      <RemoveImageButton
-                        onClick={(e) => onImageRemoved(e, item)}
-                      >
-                        <FontAwesomeIcon icon="times"></FontAwesomeIcon>
-                      </RemoveImageButton>
-                    </ImageEditBox>
-                  </div>
-                );
-              } else if (item.pictureId) {
-                return (
-                  <div className="col-3" key={index}>
-                    <ImageEditBox>
-                      <Thumbnail
-                        src={`${process.env.REACT_APP_CDN_PHOTO_URL}${item.pictureId}`}
-                      ></Thumbnail>
-                      <RemoveImageButton
-                        onClick={(e) => onImageRemoved(e, item)}
-                      >
-                        <FontAwesomeIcon icon="times"></FontAwesomeIcon>
-                      </RemoveImageButton>
-                    </ImageEditBox>
-                  </div>
-                );
-              }
-
-              return null;
-            })}
-          </FormRow>
-        ) : null}
-        <CommonEditor
-          contentHtml={currentProduct ? currentProduct.description.value : null}
-          height={height}
-          convertImageCallback={convertImageCallback}
-          onImageValidate={onImageValidate}
-          placeholder="Enter the description here"
-          onChanged={onDescriptionChanged}
-          ref={editorRef}
-        />
-        <Footer className="row mb-3">
-          <div className="col-auto"></div>
-          <div className="col-auto ms-auto">
-            <ButtonPrimary size="xs">Post</ButtonPrimary>
-          </div>
-        </Footer>
-      </form>
-    </Fragment>
+            } else if (item.pictureId) {
+              return (
+                <div className="col-3" key={index}>
+                  <ImageEditBox>
+                    <Thumbnail
+                      src={`${process.env.REACT_APP_CDN_PHOTO_URL}${item.pictureId}`}
+                    ></Thumbnail>
+                    <RemoveImageButton onClick={(e) => onImageRemoved(e, item)}>
+                      <FontAwesomeIcon icon="times"></FontAwesomeIcon>
+                    </RemoveImageButton>
+                  </ImageEditBox>
+                </div>
+              );
+            }
+            return null;
+          })}
+        </FormRow>
+      ) : null}
+      <CommonEditor
+        contentHtml={currentProduct ? currentProduct.description.value : null}
+        height={height}
+        convertImageCallback={convertImageCallback}
+        onImageValidate={onImageValidate}
+        placeholder="Enter the description here"
+        onChanged={onDescriptionChanged}
+        ref={editorRef}
+      />
+      <Footer className="row mb-3">
+        <div className="col-auto"></div>
+        <div className="col-auto ms-auto">
+          <ButtonPrimary size="xs">Post</ButtonPrimary>
+        </div>
+      </Footer>
+    </form>
   );
 });

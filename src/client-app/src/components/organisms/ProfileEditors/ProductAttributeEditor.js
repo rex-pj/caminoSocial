@@ -1,4 +1,4 @@
-import React, { Fragment } from "react";
+import React from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { PrimaryTextbox } from "../../atoms/Textboxes";
 import AsyncSelect from "react-select/async";
@@ -11,6 +11,11 @@ import ProductAttributeValueEditor from "./ProductAttributeValueEditor";
 
 const FormRow = styled.div`
   margin-bottom: ${(p) => p.theme.size.tiny};
+  border: 1px solid ${(p) => p.theme.color.primaryDivide};
+  background-color: ${(p) => p.theme.color.primaryDivide};
+  border-radius: ${(p) => p.theme.borderRadius.normal};
+  padding: ${(p) => p.theme.size.tiny};
+  padding-bottom: 0;
 
   ${PrimaryTextbox} {
     max-width: 100%;
@@ -82,65 +87,61 @@ export default (props) => {
   };
 
   return (
-    <Fragment>
-      <FormRow>
-        <div className="row mb-2">
-          <div className="col-auto">
-            <ButtonOutlinePrimary
-              type="button"
-              size="xs"
-              title="Add attribute value"
-              onClick={onAddAttributeValue}
-            >
-              <FontAwesomeIcon icon="plus" />
-            </ButtonOutlinePrimary>
-          </div>
-          <div className="col-6 col-xl-4">
-            <AsyncSelect
-              className="cate-selection"
-              placeholder="Select attribute"
-            />
-          </div>
-          <div className="col-6 col-xl-4">
-            <AsyncSelect
-              className="cate-selection"
-              placeholder="Select control type"
-            />
-          </div>
-          <div className="col-6 col-xl-2">
-            <PrimaryTextbox
-              name="displayOrder"
-              value={attribute.displayOrder ? attribute.displayOrder : ""}
-              placeholder="Display Order"
-              onChange={handleInputChange}
-            />
-          </div>
-          <div className="col-auto">
-            <ButtonOutlineDanger
-              type="button"
-              size="xs"
-              title="Remove this attribute"
-              onClick={() => onRemoveAttribute(attribute)}
-            >
-              <FontAwesomeIcon icon="times" />
-            </ButtonOutlineDanger>
-          </div>
+    <FormRow>
+      <div className="row mb-2">
+        <div className="col-1">
+          <ButtonOutlinePrimary
+            type="button"
+            size="xs"
+            title="Add attribute value"
+            onClick={onAddAttributeValue}
+          >
+            <FontAwesomeIcon icon="plus" />
+          </ButtonOutlinePrimary>
         </div>
-        {attributeValues
-          ? attributeValues.map((attrVal, index) => {
-              return (
-                <ProductAttributeValueEditor
-                  key={index}
-                  attributeValue={attrVal}
-                  onRemoveAttributeValue={onRemoveAttributeValue}
-                  onAttributeValueChange={(e) =>
-                    onAttributeValueChange(e, index)
-                  }
-                ></ProductAttributeValueEditor>
-              );
-            })
-          : null}
-      </FormRow>
-    </Fragment>
+        <div className="col-6 col-xl-4 ps-0">
+          <AsyncSelect
+            className="cate-selection"
+            placeholder="Select attribute"
+          />
+        </div>
+        <div className="col-6 col-xl-4">
+          <AsyncSelect
+            className="cate-selection"
+            placeholder="Select control type"
+          />
+        </div>
+        <div className="col-6 col-xl-2">
+          <PrimaryTextbox
+            name="displayOrder"
+            value={attribute.displayOrder ? attribute.displayOrder : ""}
+            placeholder="Display Order"
+            onChange={handleInputChange}
+          />
+        </div>
+        <div className="col-auto">
+          <ButtonOutlineDanger
+            type="button"
+            size="xs"
+            title="Remove this attribute"
+            onClick={() => onRemoveAttribute(attribute)}
+          >
+            <FontAwesomeIcon icon="times" />
+          </ButtonOutlineDanger>
+        </div>
+      </div>
+      {attributeValues
+        ? attributeValues.map((attrVal, index) => {
+            return (
+              <ProductAttributeValueEditor
+                key={index}
+                attributeValue={attrVal}
+                onRemoveAttributeValue={onRemoveAttributeValue}
+                onAttributeValueChange={(e) => onAttributeValueChange(e, index)}
+              ></ProductAttributeValueEditor>
+            );
+          })
+        : null}
+    </FormRow>
   );
 };

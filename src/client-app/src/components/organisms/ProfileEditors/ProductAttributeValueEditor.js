@@ -1,6 +1,5 @@
 import React from "react";
 import { PrimaryTextbox } from "../../atoms/Textboxes";
-import { LabelPrimary } from "../../atoms/Labels";
 import { ButtonOutlineDanger } from "../../atoms/Buttons/OutlineButtons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
@@ -20,28 +19,34 @@ export default (props) => {
 
   return (
     <div className="row mb-2">
-      <div className="col-12 col-md-6 col-lg-4">
-        <div className="row">
-          <div className="col-2 mt-1">
-            <LabelPrimary className="d-none d-sm-inline">Value</LabelPrimary>
-          </div>
-          <div className="col-10">
-            <PrimaryTextbox
-              name="name"
-              value={attributeValue.name}
-              placeholder="Name"
-              onChange={handleInputChange}
-            />
-          </div>
-        </div>
+      <div className="col-1"></div>
+      <div className="col-12 col-md-6 col-lg-4 ps-0">
+        <PrimaryTextbox
+          name="name"
+          value={attributeValue.name}
+          placeholder="Name"
+          onChange={handleInputChange}
+        />
       </div>
-      <div className="col-12 col-md-3 col-lg-4">
+      <div className="col-6 col-md-3 col-lg-2">
         <PrimaryTextbox
           name="priceAdjustment"
           placeholder="Price adjustment"
           onChange={handleInputChange}
           value={
             attributeValue.priceAdjustment ? attributeValue.priceAdjustment : ""
+          }
+        />
+      </div>
+      <div className="col-6 col-md-3 col-lg-2">
+        <PrimaryTextbox
+          name="pricePercentageAdjustment"
+          placeholder="Price percentage adjustment"
+          onChange={handleInputChange}
+          value={
+            attributeValue.pricePercentageAdjustment
+              ? attributeValue.pricePercentageAdjustment
+              : ""
           }
         />
       </div>

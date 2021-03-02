@@ -300,6 +300,7 @@ CREATE TABLE [dbo].[ProductAttributeRelationValue](
 	[Name] NVARCHAR(400) NOT NULL,
 	[ProductAttributeRelationId] INT NOT NULL,
 	[PriceAdjustment] DECIMAL(18, 4) NOT NULL,
+	[PricePercentageAdjustment] DECIMAL(18, 4) NOT NULL,
 	[Quantity] INT NOT NULL,
 	[DisplayOrder] INT NOT NULL
 )
