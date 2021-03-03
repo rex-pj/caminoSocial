@@ -12,7 +12,10 @@ import AsyncSelect from "react-select/async";
 import productCreationModel from "../../../models/productCreationModel";
 import { Thumbnail } from "../../molecules/Thumbnails";
 import { ButtonOutlinePrimary } from "../../atoms/Buttons/OutlineButtons";
-import ProductAttributeEditor from "./ProductAttributeEditor";
+import ProductAttributeRow from "./ProductAttributeRow";
+import { useStore } from "../../../store/hook-store";
+import ProductAttributeEditModal from "./ProductAttributeEditModal";
+import ProductAttributeValueEditModal from "./ProductAttributeValueEditModal";
 
 const FormRow = styled.div`
   margin-bottom: ${(p) => p.theme.size.tiny};
@@ -95,6 +98,7 @@ export default withRouter((props) => {
   const editorRef = useRef();
   const categorySelectRef = useRef();
   const farmSelectRef = useRef();
+  const dispatch = useStore(true)[1];
 
   const handleInputChange = (evt) => {
     let data = formData || {};
@@ -271,17 +275,56 @@ export default withRouter((props) => {
   };
 
   /// Attribute features
-  const onAddAttribute = () => {
-    let { attributes } = formData;
-    attributes.push({
-      textPrompt: "",
-      isRequired: false,
-      attributeControlTypeId: 0,
-      displayOrder: 0,
+  const openEditAttributeModal = () => {
+    dispatch("OPEN_MODAL", {
+      data: {
+        attribute: {
+          attributeId: 0,
+          textPrompt: "",
+          isRequired: false,
+          attributeControlTypeId: 0,
+          displayOrder: 0,
+        },
+        title: "Add new product attribute",
+      },
+      execution: {
+        onEditAttribute,
+      },
+      options: {
+        isOpen: true,
+        innerModal: ProductAttributeEditModal,
+      },
     });
+  };
+
+  const onEditAttribute = (data, index) => {
+    let { attributes } = formData;
+
+    if (index === 0 || index) {
+      attributes[index] = data;
+    } else {
+      attributes.push(data);
+    }
 
     setFormData({
       ...formData,
+    });
+  };
+
+  const onOpenEditAttributeModal = (currentAttr, index) => {
+    dispatch("OPEN_MODAL", {
+      data: {
+        attribute: currentAttr,
+        title: "Edit product attribute",
+        index: index,
+      },
+      execution: {
+        onEditAttribute,
+      },
+      options: {
+        isOpen: true,
+        innerModal: ProductAttributeEditModal,
+      },
     });
   };
 
@@ -303,6 +346,49 @@ export default withRouter((props) => {
       ...formData,
     });
   };
+
+  /// Attribute value features
+  const onOpenAddAttributeValueModal = (currentAttributeValue, index) => {
+    dispatch("OPEN_MODAL", {
+      data: {
+        attributeValue: {
+          label: "",
+          priceAdjustment: 0,
+          pricePercentageAdjustment: 0,
+          quantity: 0,
+          displayOrder: 0,
+        },
+        title: "Edit product attribute value",
+        index: index,
+      },
+      execution: {
+        onEditAttributeValue,
+      },
+      options: {
+        isOpen: true,
+        innerModal: ProductAttributeValueEditModal,
+      },
+    });
+  };
+
+  const onOpenEditAttributeValueModal = (currentAttributeValue, index) => {
+    dispatch("OPEN_MODAL", {
+      data: {
+        attribute: currentAttributeValue,
+        title: "Edit product attribute value",
+        index: index,
+      },
+      execution: {
+        onEditAttributeValue,
+      },
+      options: {
+        isOpen: true,
+        innerModal: ProductAttributeValueEditModal,
+      },
+    });
+  };
+
+  const onEditAttributeValue = (data, index) => {};
 
   useEffect(() => {
     if (currentProduct && !formData?.id?.value) {
@@ -376,7 +462,7 @@ export default withRouter((props) => {
           type="button"
           size="xs"
           title="Add product attributes"
-          onClick={onAddAttribute}
+          onClick={openEditAttributeModal}
         >
           <FontAwesomeIcon icon="plus"></FontAwesomeIcon>
         </ButtonOutlinePrimary>
@@ -384,11 +470,14 @@ export default withRouter((props) => {
       {attributes
         ? attributes.map((attr, index) => {
             return (
-              <ProductAttributeEditor
+              <ProductAttributeRow
                 key={index}
                 attribute={attr}
                 onRemoveAttribute={onRemoveAttribute}
                 onAttributeChange={(e) => onAttributeChange(e, index)}
+                onEditAttribute={(e) => onOpenEditAttributeModal(e, index)}
+                onAddAttributeValue={onOpenAddAttributeValueModal}
+                onEditAttributeValue={onOpenEditAttributeValueModal}
               />
             );
           })
