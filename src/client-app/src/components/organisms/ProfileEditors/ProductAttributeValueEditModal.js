@@ -20,7 +20,7 @@ const FormRow = styled.div`
 export default function (props) {
   const { data, execution } = props;
   const { onEditAttributeValue } = execution;
-  const { attributeValue, index } = data;
+  const { attributeValue, attributeIndex, attributeValueIndex } = data;
   const [formData, setFormData] = useState(attributeValue);
 
   const handleInputChange = (evt) => {
@@ -32,7 +32,7 @@ export default function (props) {
   };
 
   const editAttributeValue = () => {
-    onEditAttributeValue(formData, index);
+    onEditAttributeValue(formData, attributeIndex, attributeValueIndex);
     props.closeModal();
   };
 
@@ -80,7 +80,7 @@ export default function (props) {
       </PanelBody>
       <PanelFooter>
         <ButtonPrimary onClick={() => editAttributeValue()} size="xs">
-          {index || index === 0 ? "Update" : "Add"}
+          {attributeValueIndex || attributeValueIndex === 0 ? "Update" : "Add"}
         </ButtonPrimary>
       </PanelFooter>
     </Fragment>

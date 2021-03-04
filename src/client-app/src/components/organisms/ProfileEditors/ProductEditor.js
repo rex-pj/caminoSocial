@@ -297,20 +297,6 @@ export default withRouter((props) => {
     });
   };
 
-  const onEditAttribute = (data, index) => {
-    let { attributes } = formData;
-
-    if (index === 0 || index) {
-      attributes[index] = data;
-    } else {
-      attributes.push(data);
-    }
-
-    setFormData({
-      ...formData,
-    });
-  };
-
   const onOpenEditAttributeModal = (currentAttr, index) => {
     dispatch("OPEN_MODAL", {
       data: {
@@ -325,6 +311,20 @@ export default withRouter((props) => {
         isOpen: true,
         innerModal: ProductAttributeEditModal,
       },
+    });
+  };
+
+  const onEditAttribute = (data, index) => {
+    let { attributes } = formData;
+
+    if (index === 0 || index) {
+      attributes[index] = data;
+    } else {
+      attributes.push(data);
+    }
+
+    setFormData({
+      ...formData,
     });
   };
 
@@ -348,7 +348,7 @@ export default withRouter((props) => {
   };
 
   /// Attribute value features
-  const onOpenAddAttributeValueModal = (currentAttributeValue, index) => {
+  const onOpenAddAttributeValueModal = (attributeIndex) => {
     dispatch("OPEN_MODAL", {
       data: {
         attributeValue: {
@@ -359,7 +359,7 @@ export default withRouter((props) => {
           displayOrder: 0,
         },
         title: "Edit product attribute value",
-        index: index,
+        attributeIndex: attributeIndex,
       },
       execution: {
         onEditAttributeValue,
@@ -371,12 +371,17 @@ export default withRouter((props) => {
     });
   };
 
-  const onOpenEditAttributeValueModal = (currentAttributeValue, index) => {
+  const onOpenEditAttributeValueModal = (
+    currentAttributeValue,
+    attributeIndex,
+    attributeValueIndex
+  ) => {
     dispatch("OPEN_MODAL", {
       data: {
-        attribute: currentAttributeValue,
+        attributeValue: currentAttributeValue,
         title: "Edit product attribute value",
-        index: index,
+        attributeIndex: attributeIndex,
+        attributeValueIndex: attributeValueIndex,
       },
       execution: {
         onEditAttributeValue,
@@ -388,7 +393,25 @@ export default withRouter((props) => {
     });
   };
 
-  const onEditAttributeValue = (data, index) => {};
+  const onEditAttributeValue = (data, attributeIndex, attributeValueIndex) => {
+    let { attributes } = formData;
+    if (!attributeIndex && attributeIndex !== 0) {
+      return;
+    }
+
+    let { attributeValues } = attributes[attributeIndex];
+    if (!attributeValues) {
+      attributes[attributeIndex].attributeValues = [data];
+    } else if (attributeValueIndex === 0 || attributeValueIndex) {
+      attributeValues[attributeValueIndex] = data;
+    } else {
+      attributeValues.push(data);
+    }
+
+    setFormData({
+      ...formData,
+    });
+  };
 
   useEffect(() => {
     if (currentProduct && !formData?.id?.value) {
@@ -476,8 +499,10 @@ export default withRouter((props) => {
                 onRemoveAttribute={onRemoveAttribute}
                 onAttributeChange={(e) => onAttributeChange(e, index)}
                 onEditAttribute={(e) => onOpenEditAttributeModal(e, index)}
-                onAddAttributeValue={onOpenAddAttributeValueModal}
-                onEditAttributeValue={onOpenEditAttributeValueModal}
+                onAddAttributeValue={() => onOpenAddAttributeValueModal(index)}
+                onEditAttributeValue={(e, attributeValueIndex) =>
+                  onOpenEditAttributeValueModal(e, index, attributeValueIndex)
+                }
               />
             );
           })
